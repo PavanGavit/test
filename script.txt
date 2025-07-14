@@ -1,0 +1,23 @@
+﻿cd D:\ColmapProject
+mkdir dense
+
+
+colmap image_undistorter ^
+    --image_path frames ^
+    --input_path sparse\0 ^
+    --output_path dense ^
+    --output_type COLMAP
+
+
+
+colmap patch_match_stereo ^
+    --workspace_path dense ^
+    --workspace_format COLMAP ^
+    --PatchMatchStereo.geom_consistency true
+
+
+colmap stereo_fusion ^
+    --workspace_path dense ^
+    --workspace_format COLMAP ^
+    --input_type geometric ^
+    --output_path dense\fused.ply
